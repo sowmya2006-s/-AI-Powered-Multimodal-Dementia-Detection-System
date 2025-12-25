@@ -105,6 +105,14 @@ npm run dev
 5. Patient decides whether to proceed to Phase 3 (MRI)
 6. If MRI completed, system generates **final comprehensive report**
 
+## Phase 1: Voice-Based Dementia Detection
+
+- Dataset: DementiaNet
+- Feature Extraction: MFCC Spectrograms
+- Model: Swin Transformer
+- Output: Dementia Probability + Risk Level
+- Status: ✅ Completed
+
 ## 🔒 Security
 
 - JWT authentication

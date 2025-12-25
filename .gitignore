@@ -1,60 +1,33 @@
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
+*.pyc
+*.pyo
+*.pyd
+.env
 venv/
-ENV/
-*.egg-info/
-dist/
-build/
-
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Environment Variables
-*.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# ML Models & Datasets
-*.pt
-*.pth
-*.h5
-*.pkl
-*.joblib
-datasets/voice/
-datasets/mri/
-
-# Database
-*.sqlite3
-db.sqlite3
-*.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
-
-# Next.js
-.next/
-out/
+env/
 
 # Django
-*.log
+db.sqlite3
 media/
-staticfiles/
 
-# AWS
-*.pem
+# ML artifacts
+*.pth
+*.h5
+*.onnx
+*.pt
+
+# Datasets
+datasets/
+*.wav
+*.mp3
+*.png
+*.jpg
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
