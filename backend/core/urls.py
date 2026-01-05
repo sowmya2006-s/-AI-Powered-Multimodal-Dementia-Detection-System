@@ -24,4 +24,6 @@ urlpatterns = [
     path('api/accounts/', include('accounts.urls')),
     path('api/patients/', include('patients.urls')),
     path('api/voice/', include('voice.urls')),
+    # path('api/cognitive/', include('cognitive.urls')), # Temporarily REMOVED per scope update
+    path('api/reports/', include('reports.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

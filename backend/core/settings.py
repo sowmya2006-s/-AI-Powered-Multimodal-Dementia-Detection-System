@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'voice',
     'memory',
     'reports',
+    'cognitive',
 ]
 
 MIDDLEWARE = [

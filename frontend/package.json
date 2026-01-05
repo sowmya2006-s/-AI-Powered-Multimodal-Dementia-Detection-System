@@ -9,32 +9,32 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@hookform/resolvers": "^3.10.0",
+    "@mui/icons-material": "^5.18.0",
+    "@mui/material": "^5.18.0",
+    "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2",
+    "framer-motion": "^11.18.2",
+    "howler": "^2.2.4",
+    "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "next": "^14.1.0",
-    "@mui/material": "^5.15.5",
-    "@mui/icons-material": "^5.15.5",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@tanstack/react-query": "^5.17.19",
-    "axios": "^1.6.5",
-    "react-hook-form": "^7.49.3",
-    "zod": "^3.22.4",
-    "@hookform/resolvers": "^3.3.4",
-    "howler": "^2.2.4",
-    "framer-motion": "^11.0.3",
-    "recharts": "^2.10.4"
+    "react-hook-form": "^7.69.0",
+    "recharts": "^2.15.4",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "typescript": "^5.3.3",
+    "@types/howler": "^2.2.11",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "@types/howler": "^2.2.11",
-    "tailwindcss": "^3.4.1",
-    "postcss": "^8.4.33",
     "autoprefixer": "^10.4.17",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0"
+    "eslint-config-next": "^14.1.0",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   }
 }

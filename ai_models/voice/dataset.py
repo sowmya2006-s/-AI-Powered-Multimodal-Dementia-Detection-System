@@ -1,48 +1,52 @@
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
+import torch
+from torch.utils.data import Dataset, DataLoader
+import numpy as np
 import os
+from pathlib import Path
+import torch.nn.functional as F
 
-def get_dataloader(data_dir, batch_size=16):
-    """
-    Creates a DataLoader for the MFCC dataset.
-    Args:
-        data_dir (str): Path to the directory containing class subfolders (dementia/normal).
-        batch_size (int): Batch size for the loader.
-    """
-    
-    # Check if directory exists
+class MFCCDataset(Dataset):
+    def __init__(self, data_dir, transform=None):
+        self.data_dir = Path(data_dir)
+        self.files = []
+        self.labels = []
+        self.classes = sorted([d.name for d in self.data_dir.iterdir() if d.is_dir()])
+        self.class_to_idx = {cls_name: i for i, cls_name in enumerate(self.classes)}
+        
+        for cls_name in self.classes:
+            cls_dir = self.data_dir / cls_name
+            for f in cls_dir.glob("*.npy"):
+                self.files.append(f)
+                self.labels.append(self.class_to_idx[cls_name])
+                
+    def __len__(self):
+        return len(self.files)
+        
+    def __getitem__(self, idx):
+        file_path = self.files[idx]
+        label = self.labels[idx]
+        
+        # Load (3, 40, T) numpy array
+        mfcc_feat = np.load(file_path)
+        mfcc_tensor = torch.from_numpy(mfcc_feat).float()
+        
+        # Internal Resize to (224, 224)
+        # Shape is (3, 40, T)
+        mfcc_tensor = mfcc_tensor.unsqueeze(0) # (1, 3, 40, T)
+        mfcc_tensor = F.interpolate(mfcc_tensor, size=(224, 224), mode="bilinear", align_corners=False)
+        mfcc_tensor = mfcc_tensor.squeeze(0) # (3, 224, 224)
+        
+        return mfcc_tensor, label
+
+def get_dataloader(data_dir, batch_size=16, shuffle=True):
     if not os.path.exists(data_dir):
-        # Return empty/None if dir doesn't exist to avoid crashing everything immediately
-        # But in training context, we probably want to fail fast or handle it.
-        # Allowing it to return (None, None) so caller can handle.
         print(f"Dataset directory not found: {data_dir}")
         return None, None
-
-    # Swin Transformer typically expects specific normalization (ImageNet stats)
-    # But for MFCCs, mean=0.5, std=0.5 is often a safe generic start if not computing specific stats.
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) # ImageNet stats
-        # Alternatively use the simple one requested:
-        # transforms.Normalize(mean=[0.5], std=[0.5]) 
-        # I'll stick to the user's requested logic for consistency if they provided it.
-    ])
-
-    try:
-        dataset = datasets.ImageFolder(
-            root=data_dir,
-            transform=transform
-        )
         
-        loader = DataLoader(
-            dataset,
-            batch_size=batch_size,
-            shuffle=True
-        )
-        
-        return loader, dataset.classes
-        
-    except Exception as e:
-        print(f"Error creating DataLoader: {e}")
+    dataset = MFCCDataset(data_dir)
+    if len(dataset) == 0:
+        print(f"No .npy files found in {data_dir}")
         return None, None
+        
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+    return loader, dataset.classes
