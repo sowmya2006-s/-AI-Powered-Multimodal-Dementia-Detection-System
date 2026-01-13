@@ -1,29 +1,24 @@
 import Link from "next/link";
-import { Button, Container, Typography, Box, Stack } from "@mui/material";
 
-export default function LandingPage() {
+export default function Home() {
     return (
-        <Container maxWidth="md">
-            <Box sx={{ mt: 8, textAlign: "center" }}>
-                <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
-                    Dementia Detection System
-                </Typography>
-                <Typography variant="h5" color="text.secondary" paragraph>
-                    AI-Powered Multimodal Screening for Early Detection
-                </Typography>
-                <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
-                    <Link href="/login" passHref>
-                        <Button variant="contained" size="large">
-                            Login
-                        </Button>
-                    </Link>
-                    <Link href="/signup" passHref>
-                        <Button variant="outlined" size="large">
-                            Sign Up
-                        </Button>
-                    </Link>
-                </Stack>
-            </Box>
-        </Container>
+        <main className="min-h-screen flex items-center justify-center">
+            <div className="bg-white shadow-xl rounded-2xl p-10 max-w-xl text-center">
+                <h1 className="text-3xl font-bold text-blue-600 mb-4">
+                    AI-Powered Dementia Screening
+                </h1>
+
+                <p className="text-gray-600 mb-8">
+                    Early dementia risk screening using voice analysis and MRI-based
+                    artificial intelligence.
+                </p>
+
+                <Link href="/screening">
+                    <button className="px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
+                        Start Screening
+                    </button>
+                </Link>
+            </div>
+        </main>
     );
 }
