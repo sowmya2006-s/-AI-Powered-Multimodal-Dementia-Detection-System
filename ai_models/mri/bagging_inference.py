@@ -28,9 +28,10 @@ def predict_mri_ensemble(image_path):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model_dir = os.path.dirname(os.path.abspath(__file__))
     model_paths = [
-        os.path.join(model_dir, 'swin_mri_1.pth'),
-        os.path.join(model_dir, 'swin_mri_2.pth'),
-        os.path.join(model_dir, 'swin_mri_3.pth')
+        os.path.join(model_dir, 'swin_bag1.pth'),
+        os.path.join(model_dir, 'swin_bag2.pth'),
+        os.path.join(model_dir, 'swin_bag3.pth'),
+        os.path.join(model_dir, 'swin_boosted.pth')
     ]
 
     # Preprocess image
