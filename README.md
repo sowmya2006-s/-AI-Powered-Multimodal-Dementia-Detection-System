@@ -76,6 +76,9 @@ npm run dev
 │       ├── app/         # Next.js 14 App Router
 │       └── components/  # React components
 ├── ai_models/           # Trained ML models
+│   ├── mri/             # MRI Bagging/Boosting models
+│   └── voice/           # Voice analysis models
+├── scripts/             # ROI preprocessing & evaluation
 ├── datasets/            # Training datasets
 └── docs/                # Documentation
 ```
@@ -111,6 +114,19 @@ npm run dev
 - Feature Extraction: MFCC Spectrograms
 - Model: Swin Transformer
 - Output: Dementia Probability + Risk Level
+- Status: ✅ Completed
+
+## Phase 2: Memory Assessment
+
+- Activity: Visual and Auditory Memory Games
+- Metrics: Accuracy, Response Time, Pattern Recognition
+- Status: ✅ Completed
+
+## Phase 3: MRI Analysis
+
+- Technology: ROI Detection (YOLOv8) + Classification (Swin Transformer)
+- Techniques: Bagging Ensemble, Hard-Sample Re-weighting (Boosting)
+- Features: Brain region of interest cropping, Confusion Matrix visualization
 - Status: ✅ Completed
 
 ## 🔒 Security
