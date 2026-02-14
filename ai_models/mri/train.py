@@ -16,8 +16,14 @@ def train_model():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    # The dataset is at datasets/MRI_SPLIT
-    base_dir = os.path.join("datasets", "MRI_SPLIT")
+    # The dataset can be original or cropped
+    # Default: datasets/MRI_SPLIT
+    dataset_name = "MRI_SPLIT" 
+    if os.path.exists(os.path.join("datasets", "MRI_CROPPED")):
+        dataset_name = "MRI_CROPPED"
+        print(f"✨ Found cropped dataset. Using {dataset_name}")
+    
+    base_dir = os.path.join("datasets", dataset_name)
     train_loader, val_loader, _ = get_loaders(base_dir)
 
     model = get_model().to(device)
