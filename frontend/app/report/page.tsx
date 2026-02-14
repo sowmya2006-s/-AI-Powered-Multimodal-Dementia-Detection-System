@@ -11,11 +11,12 @@ export default function ReportPage() {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const patientId = 1; // Demo patient_id
+                // Get patient ID from storage (was set during screening)
+                const storedPatientId = localStorage.getItem('current_patient_id') || "1";
                 const res = await fetch("http://localhost:8000/api/reports/generate-fusion/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ patient_id: patientId }),
+                    body: JSON.stringify({ patient_id: storedPatientId }),
                 });
                 const json = await res.json();
                 setReport(json);
