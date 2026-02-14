@@ -18,10 +18,10 @@ from ai_models.mri.dataset import transform
 
 # Hyperparameters
 BATCH_SIZE = 16
-LEARNING_RATE = 3e-5
+LEARNING_RATE = 1e-4 # Updated to match user request
 WEIGHT_DECAY = 1e-4
-EPOCHS = 10 # 10 epochs for faster demonstration, 25 for production
-DATA_DIR = os.path.join(project_root, 'datasets', 'MRI_MULTI_SPLIT')
+EPOCHS = 10 
+DATA_DIR = os.path.join(project_root, 'datasets', 'MRI_CROPPED')
 NUM_MODELS = 3
 
 def train_single_model(model_idx, device):
@@ -60,7 +60,7 @@ def train_single_model(model_idx, device):
     scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.3, patience=2)
 
     best_val_acc = 0.0
-    model_save_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'swin_mri_{model_idx}.pth')
+    model_save_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'swin_bag{model_idx}.pth')
 
     for epoch in range(EPOCHS):
         model.train()
