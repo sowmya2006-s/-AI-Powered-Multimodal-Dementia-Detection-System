@@ -9,8 +9,22 @@ from .audio.game_logic import AudioMemorySession
 from .scoring.memory_score import compute_memory_score
 
 ROUND_DELAYS = [5, 10, 30, 60]
-IMAGE_POOL = [f"image_{i}.jpg" for i in range(1, 11)]  # Placeholder pool
-AUDIO_POOL = [f"audio_{i}.mp3" for i in range(1, 11)]  # Placeholder pool
+import os
+from django.conf import settings
+
+def get_image_pool():
+    path = os.path.join(settings.MEDIA_ROOT, 'cognitive', 'visual')
+    if not os.path.exists(path):
+        os.makedirs(path, exist_ok=True)
+    files = [f for f in os.listdir(path) if f.lower().endswith(('.jpg', '.png', '.jpeg', '.webp'))]
+    return files if files else [f"image_{i}.jpg" for i in range(1, 11)]
+
+def get_audio_pool():
+    path = os.path.join(settings.MEDIA_ROOT, 'cognitive', 'audio')
+    if not os.path.exists(path):
+        os.makedirs(path, exist_ok=True)
+    files = [f for f in os.listdir(path) if f.lower().endswith(('.mp3', '.wav', '.ogg'))]
+    return files if files else [f"audio_{i}.mp3" for i in range(1, 11)]
 
 class StartTest(APIView):
     def post(self, request):
@@ -47,11 +61,11 @@ class GenerateRound(APIView):
         
         try:
             if test_mode == "visual":
-                session = VisualMemorySession(image_pool=IMAGE_POOL, used_images=used_items)
+                session = VisualMemorySession(image_pool=get_image_pool(), used_images=used_items)
                 round_data = session.generate_round(delay)
                 request.session["used_items"] = round_data["used_images"]
             else:
-                session = AudioMemorySession(audio_pool=AUDIO_POOL, used_audio=used_items)
+                session = AudioMemorySession(audio_pool=get_audio_pool(), used_audio=used_items)
                 round_data = session.generate_round(delay)
                 request.session["used_items"] = round_data["used_audio"]
             
