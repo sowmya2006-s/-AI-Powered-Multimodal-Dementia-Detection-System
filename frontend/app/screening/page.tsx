@@ -1,51 +1,47 @@
-import Link from "next/link";
+"use client";
+
+import React from 'react';
+import Header from '@/components/screening/Header';
+import StepsUI from '@/components/screening/StepsUI';
+import LoginScreen from '@/components/screening/LoginScreen';
+import PatientForm from '@/components/screening/PatientForm';
+import SpeechScreening from '@/components/screening/SpeechScreening';
+import CognitiveTest from '@/components/screening/CognitiveTest';
+import MRIAnalysis from '@/components/screening/MRIAnalysis';
+import ResultsReport from '@/components/screening/ResultsReport';
+import { useScreening } from '@/context/ScreeningContext';
 
 export default function ScreeningPage() {
+    const { currentStep } = useScreening();
+
+    const renderScreen = () => {
+        switch (currentStep) {
+            case 1: return <LoginScreen />;
+            case 2: return <PatientForm />;
+            case 3: return <SpeechScreening />;
+            case 4: return <CognitiveTest />;
+            case 5: return <MRIAnalysis />;
+            case 6: return <ResultsReport />;
+            default: return <LoginScreen />;
+        }
+    };
+
     return (
-        <main className="min-h-screen flex items-center justify-center px-6">
-            <div className="max-w-4xl w-full">
-                <h2 className="text-3xl font-bold text-center text-slate-800 mb-10">
-                    Choose Screening Method
-                </h2>
+        <div className="min-h-screen bg-gradient-to-b from-[#F8FBFF] to-[#F4F8FF] font-sans text-gray-800">
+            <div className="max-w-[1100px] mx-auto px-5 py-8">
+                <Header />
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* Voice Screening Card */}
-                    <div className="bg-white rounded-2xl shadow-md p-8 text-center">
-                        <h3 className="text-2xl font-semibold text-blue-600 mb-4">
-                            Voice Screening
-                        </h3>
-
-                        <p className="text-gray-600 mb-6">
-                            Analyze speech patterns to detect early dementia-related
-                            abnormalities.
-                        </p>
-
-                        <Link href="/voice">
-                            <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                                Proceed to Voice Test
-                            </button>
-                        </Link>
+                <main className="mt-6 flex flex-col gap-5">
+                    <StepsUI />
+                    <div className="transition-all duration-300">
+                        {renderScreen()}
                     </div>
+                </main>
 
-                    {/* MRI Screening Card */}
-                    <div className="bg-white rounded-2xl shadow-md p-8 text-center">
-                        <h3 className="text-2xl font-semibold text-teal-600 mb-4">
-                            MRI Screening
-                        </h3>
-
-                        <p className="text-gray-600 mb-6">
-                            Analyze brain MRI scans to detect structural changes associated
-                            with dementia.
-                        </p>
-
-                        <Link href="/mri">
-                            <button className="w-full py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">
-                                Proceed to MRI Test
-                            </button>
-                        </Link>
-                    </div>
-                </div>
+                <footer className="mt-12 text-center text-[11px] text-muted font-medium opacity-60">
+                    NEUROSCREEN AI • MULTIMODAL DEMENTIA SCREENING SYSTEM • v1.0
+                </footer>
             </div>
-        </main>
+        </div>
     );
 }
