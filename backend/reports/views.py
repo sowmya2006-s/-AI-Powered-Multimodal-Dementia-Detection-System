@@ -55,24 +55,28 @@ class FusionReportView(APIView):
             cognitive_risk = cognitive_result.risk_level
             cog_score = cognitive_result.memory_accuracy
 
-        # Fusion Logic (Or Logic)
+        # Fusion Logic (Weighted score)
+        # Weights: Voice 50%, Cognitive 50% (prior to MRI)
+        # Higher score means higher risk
+        total_score = (voice_score * 0.5) + ((1.0 - cog_score) * 0.5)
+        
         overall_risk = "LOW"
-        if voice_risk == "HIGH" or cognitive_risk == "HIGH":
+        if total_score > 0.7:
             overall_risk = "HIGH"
-        elif voice_risk == "MEDIUM" or cognitive_risk == "MEDIUM":
+        elif total_score > 0.4:
             overall_risk = "MEDIUM"
         
-        # If we have only one source, trust that source
+        # If we have only one source, trust that source with its own thresholds
         if not cognitive_result:
             overall_risk = voice_risk
         
         mri_triggered = (overall_risk == "HIGH")
         
-        recommendation = "Regular monitoring recommended."
+        recommendation = "Regular monitoring recommended based on baseline tests."
         if overall_risk == "HIGH":
-            recommendation = "CRITICAL: High risk detected. Immediate MRI and neurologist consultation required."
+            recommendation = "CRITICAL: High markers detected in voice/cognitive tests. MRI analysis required."
         elif overall_risk == "MEDIUM":
-            recommendation = "Follow-up assessment in 3 months recommended."
+            recommendation = "Moderate risk markers found. Follow-up assessment in 3 months."
 
         report = AssessmentReport.objects.create(
             patient=patient,
