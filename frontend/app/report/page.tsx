@@ -71,10 +71,26 @@ export default function ReportPage() {
 
                         <Grid item xs={12} md={6}>
                             <Typography variant="h6" fontWeight="bold">
-                                Phase 2: Cognitive Test (Archived)
+                                Phase 2: Cognitive Test
                             </Typography>
                             <Typography variant="body1">
                                 Memory Accuracy: <strong>{report.cognitive_score != null ? (report.cognitive_score * 100).toFixed(0) + "%" : "N/A"}</strong>
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <Divider sx={{ my: 1 }} />
+                        </Grid>
+
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h6" fontWeight="bold">
+                                Phase 3: MRI Analysis
+                            </Typography>
+                            <Typography variant="body1">
+                                Classification: <strong>{report.mri_label || "Pending/NA"}</strong>
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                Confidence: {report.mri_score != null ? (report.mri_score * 100).toFixed(1) + "%" : "N/A"}
                             </Typography>
                         </Grid>
                     </Grid>
