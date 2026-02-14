@@ -11,6 +11,8 @@ class AssessmentReport(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     voice_score = models.FloatField(null=True, blank=True)
     cognitive_score = models.FloatField(null=True, blank=True)
+    mri_score = models.FloatField(null=True, blank=True)
+    mri_label = models.CharField(max_length=50, null=True, blank=True)
     overall_risk = models.CharField(max_length=10, choices=RISK_LEVELS)
     mri_triggered = models.BooleanField(default=False)
     recommendation = models.TextField()
