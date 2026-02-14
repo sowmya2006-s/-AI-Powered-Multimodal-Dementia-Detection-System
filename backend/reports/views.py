@@ -89,7 +89,9 @@ class FusionReportView(APIView):
             "mri_triggered": mri_triggered,
             "recommendation": recommendation,
             "voice_score": voice_score,
-            "cognitive_score": cog_score
+            "cognitive_score": cog_score,
+            "mri_score": report.mri_score,
+            "mri_label": report.mri_label
         }, status=status.HTTP_201_CREATED)
 
 class MRIUploadView(APIView):
@@ -137,6 +139,8 @@ class MRIUploadView(APIView):
         # Update latest report if it exists
         report = AssessmentReport.objects.filter(patient=patient).order_by('-created_at').first()
         if report:
+            report.mri_score = prob
+            report.mri_label = label
             report.recommendation += f" | MRI Analysis Result: {label} (Confidence: {prob:.2f})"
             report.save()
 
