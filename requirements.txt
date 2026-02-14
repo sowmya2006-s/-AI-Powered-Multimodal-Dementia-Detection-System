@@ -1,0 +1,29 @@
+# Core AI & Image Processing
+torch
+torchvision
+torchaudio
+ultralytics
+timm
+supervision
+opencv-python
+Pillow
+
+# Backend & API
+django
+djangorestframework
+django-cors-headers
+
+# Data Science & Metrics
+numpy
+scikit-learn
+seaborn
+matplotlib
+pandas
+
+# Audio Processing (for voice model)
+librosa
+scipy
+
+# Utilities
+tqdm
+python-dotenv
