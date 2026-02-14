@@ -12,7 +12,7 @@ sys.path.append(project_root)
 from ai_models.mri.model import get_model
 
 # Constants for inference
-MODEL_PATH = "best_mri_swin.pth"
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "swin_mri_1.pth")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Transforms (same as during training)
@@ -33,7 +33,11 @@ def load_inference_model():
     if _model is None:
         _model = get_model().to(DEVICE)
         if os.path.exists(MODEL_PATH):
-            _model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+            checkpoint = torch.load(MODEL_PATH, map_location=DEVICE)
+            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                _model.load_state_dict(checkpoint['model_state_dict'])
+            else:
+                _model.load_state_dict(checkpoint)
             _model.eval()
             print(f"Loaded MRI model from {MODEL_PATH}")
         else:
